@@ -1,0 +1,9 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ExtraText">
+    <item
+        android:width="@dimen/_16sdp"
+        android:height="@dimen/_16sdp"
+        android:drawable="@drawable/search" />
+
+</layer-list>

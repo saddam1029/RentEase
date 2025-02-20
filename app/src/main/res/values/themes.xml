@@ -1,0 +1,26 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.RentEase" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="CustomTextInputLayoutTheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <!-- Normal state color (colorControlNormal) -->
+        <item name="colorControlNormal">@color/app_color</item>
+
+        <!-- Activated state color (colorControlActivated) -->
+        <item name="colorControlActivated">@color/app_color</item>
+
+        <!-- Highlight state color (colorControlHighlight) -->
+        <item name="colorControlHighlight">@color/app_color</item>
+    </style>
+
+    <style name="ToolbarTitleStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:backgroundTint">@color/app_color</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Theme.RentEase" parent="Base.Theme.RentEase" />
+</resources>

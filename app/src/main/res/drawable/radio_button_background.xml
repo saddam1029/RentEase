@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Unchecked state -->
+    <item android:state_checked="false">
+        <layer-list>
+            <item>
+                <!-- Background color when unchecked -->
+                <shape android:shape="rectangle">
+                    <solid android:color="#D6E4F6" /> <!-- Change to your desired color -->
+                    <corners android:radius="@dimen/_25sdp" /> <!-- Adjust the radius to make it round -->
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- Checked state -->
+    <item android:state_checked="true" android:color="@color/white" >
+        <layer-list>
+            <item>
+                <!-- Background color when checked -->
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/app_color" /> <!-- Change to your desired color -->
+                    <corners android:radius="@dimen/_25sdp" /> <!-- Adjust the radius to make it round -->
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>
