@@ -4,16 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import android.window.SplashScreen
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -24,16 +25,14 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        // Ensure Firebase is initialized before using it
+        if (FirebaseApp.getApps(this).isEmpty()) {
+            FirebaseApp.initializeApp(this)
+        }
+
         // Initialize Firebase Auth and Database
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance().reference
-
-        // Handle system insets for splash screen layout
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         // Show splash screen for 2 seconds
         lifecycleScope.launch {
@@ -43,57 +42,47 @@ class SplashActivity : AppCompatActivity() {
             val currentUser = auth.currentUser
 
             if (currentUser != null) {
-                val userId = currentUser.uid
-
-                // Check if the user is a Provider (Realtor)
-                database.child("Provider").child(userId).child("userInfo").child("type").get()
-                    .addOnSuccessListener { providerSnapshot ->
-                        if (providerSnapshot.exists()) {
-                            // Navigate to RealtorActivity
-                            startActivity(Intent(this@SplashActivity, RealtorActivity::class.java))
-                            finish()
-                        } else {
-                            // Check if the user is a Client (Regular User)
-                            database.child("Client").child(userId).child("userInfo").child("type").get()
-                                .addOnSuccessListener { clientSnapshot ->
-                                    if (clientSnapshot.exists()) {
-                                        // Navigate to MainActivity
-                                        Toast.makeText(this@SplashActivity, "Welcome Client", Toast.LENGTH_SHORT).show()
-                                        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-                                        finish()
-                                    } else {
-                                        // User type not found in both nodes
-                                        Toast.makeText(
-                                            this@SplashActivity,
-                                            "Unknown user type. Redirecting to login.",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        navigateToLogin()
-                                    }
-                                }
-                                .addOnFailureListener { clientError ->
-                                    Toast.makeText(
-                                        this@SplashActivity,
-                                        "Failed to check Client node: ${clientError.message}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    navigateToLogin()
-                                }
-                        }
-                    }
-                    .addOnFailureListener { providerError ->
-                        Toast.makeText(
-                            this@SplashActivity,
-                            "Failed to check Provider node: ${providerError.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        navigateToLogin()
-                    }
+                checkUserType(currentUser.uid)
             } else {
-                // No user is logged in, navigate to LoginActivity
                 navigateToLogin()
             }
         }
+    }
+
+    private fun checkUserType(userId: String) {
+        database.child("Realtor").child(userId).child("userInfo").child("type").get()
+            .addOnSuccessListener { providerSnapshot ->
+                if (providerSnapshot.exists()) {
+                    startActivity(Intent(this@SplashActivity, RealtorActivity::class.java))
+                    finish()
+                } else {
+                    checkClientNode(userId)
+                }
+            }
+            .addOnFailureListener { providerError ->
+                handleError("Provider node check failed: ${providerError.message}")
+            }
+    }
+
+    private fun checkClientNode(userId: String) {
+        database.child("Regular User").child(userId).child("userInfo").child("type").get()
+            .addOnSuccessListener { clientSnapshot ->
+                if (clientSnapshot.exists()) {
+                    Toast.makeText(this@SplashActivity, "Welcome Client", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                    finish()
+                } else {
+                    handleError("Unknown user type. Redirecting to login.")
+                }
+            }
+            .addOnFailureListener { clientError ->
+                handleError("Client node check failed: ${clientError.message}")
+            }
+    }
+
+    private fun handleError(message: String) {
+        Toast.makeText(this@SplashActivity, message, Toast.LENGTH_SHORT).show()
+        navigateToLogin()
     }
 
     private fun navigateToLogin() {

@@ -1,5 +1,11 @@
 [versions]
 agp = "8.7.3"
+coreKtxVersion = "1.12.0"
+firebaseAuthKtxVersion = "22.3.1"
+firebaseAuthVersion = "22.3.1"
+firebaseBom = "33.9.0"
+firebaseDatabaseKtxVersion = "20.3.0"
+googleServices = "4.4.2"
 kotlin = "1.9.24"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -11,9 +17,18 @@ activity = "1.9.3"
 constraintlayout = "2.2.0"
 firebaseAuthKtx = "23.2.0"
 firebaseDatabaseKtx = "21.0.0"
+googleGmsGoogleServices = "4.4.2"
+firebaseAuth = "23.2.0"
+firebaseDatabase = "21.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-ktx-v1120 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
+firebase-auth-ktx-v2231 = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuthKtxVersion" }
+firebase-auth-v2231 = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuthVersion" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-database-ktx-v2030 = { module = "com.google.firebase:firebase-database-ktx", version.ref = "firebaseDatabaseKtxVersion" }
+google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -23,8 +38,11 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 

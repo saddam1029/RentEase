@@ -10,9 +10,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="@dimen/_250sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_marginTop="@dimen/_28sdp"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_200sdp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -25,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_40sdp"
         android:layout_marginRight="@dimen/_30sdp"
+        style="@style/CustomTextInputLayoutStyle"
         android:theme="@style/CustomTextInputLayoutTheme"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
         tools:ignore="MissingConstraints"
@@ -51,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_7sdp"
+        style="@style/CustomTextInputLayoutStyle"
         android:layout_marginRight="@dimen/_30sdp"
         app:layout_constraintTop_toBottomOf="@+id/username_text_input_layout"
         app:passwordToggleEnabled="true">

@@ -99,6 +99,7 @@
         android:layout_marginLeft="@dimen/_30sdp"
         android:layout_marginRight="@dimen/_30sdp"
         android:theme="@style/CustomTextInputLayoutTheme"
+        style="@style/CustomTextInputLayoutStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2">
@@ -135,6 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_30sdp"
         android:layout_marginRight="@dimen/_30sdp"
+        style="@style/CustomTextInputLayoutStyle"
         android:theme="@style/CustomTextInputLayoutTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -175,6 +177,7 @@
         android:layout_marginLeft="@dimen/_30sdp"
         android:layout_marginRight="@dimen/_30sdp"
         android:theme="@style/CustomTextInputLayoutTheme"
+        style="@style/CustomTextInputLayoutStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
@@ -213,6 +216,7 @@
         android:layout_marginLeft="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_7sdp"
         android:layout_marginRight="@dimen/_30sdp"
+        style="@style/CustomTextInputLayoutStyle"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         app:passwordToggleEnabled="true">
 

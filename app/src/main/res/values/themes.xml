@@ -3,7 +3,15 @@
     <style name="Base.Theme.RentEase" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="android:statusBarColor">@android:color/white</item>
+
+        <!-- Set status bar icons to black -->
+        <item name="android:windowLightStatusBar">true</item>
     </style>
+
+    <style name="Theme.RentEase." parent="Base.Theme.RentEase" />
+
 
     <style name="CustomTextInputLayoutTheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <!-- Normal state color (colorControlNormal) -->
@@ -14,6 +22,11 @@
 
         <!-- Highlight state color (colorControlHighlight) -->
         <item name="colorControlHighlight">@color/app_color</item>
+    </style>
+
+    <style name="CustomTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/app_color</item> <!-- Set border color to red -->
+        <item name="boxBackgroundColor">#F2F4FA</item> <!-- Set background color to silver -->
     </style>
 
     <style name="ToolbarTitleStyle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
