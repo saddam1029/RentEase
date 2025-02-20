@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.rentease"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.rentease"
-        minSdk = 31
-        targetSdk = 34
+        minSdk = 28
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
