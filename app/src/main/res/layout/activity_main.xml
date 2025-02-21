@@ -21,6 +21,7 @@
             android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:textAlignment="center"
+            android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +58,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:startIconDrawable="@drawable/small_ic_search"
             style="@style/CustomTextInputLayoutStyle"
-            app:startIconTint="@color/app_color"
+            app:startIconTint="@color/silver"
             tools:ignore="MissingConstraints">
 
         <EditText
@@ -82,6 +83,7 @@
         android:layout_marginTop="@dimen/_7sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:textAlignment="center"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
         app:srcCompat="@drawable/filter" />

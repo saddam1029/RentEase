@@ -26,6 +26,9 @@ class ProfileActivity : AppCompatActivity() {
             binding.tvYourPost.text = "Your Posts" // Change text
         }
 
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
 
         // Set up logout button
         binding.cvLogOut.setOnClickListener {
@@ -43,5 +46,9 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

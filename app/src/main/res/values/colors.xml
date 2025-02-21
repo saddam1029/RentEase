@@ -6,6 +6,7 @@
     <color name="app_color">#103DF6</color>
     <color name="light_black">#333333</color>
     <color name="silver">#5F5F5F</color>
+    <color name="lite">#D9D9D9</color>
 
 
 </resources>

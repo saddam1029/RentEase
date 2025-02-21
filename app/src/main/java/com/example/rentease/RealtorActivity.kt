@@ -24,6 +24,16 @@ class RealtorActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.ivPost.setOnClickListener {
+            val intent = Intent(this, PostActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
 
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }
