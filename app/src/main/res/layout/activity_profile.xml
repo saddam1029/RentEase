@@ -225,6 +225,7 @@
           app:srcCompat="@drawable/save" />
 
       <TextView
+          android:id="@+id/tvYourPost"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center"

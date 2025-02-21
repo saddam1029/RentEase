@@ -36,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
 
         // Show splash screen for 2 seconds
         lifecycleScope.launch {
-            delay(2000)
+            delay(1000)
 
             // Check if a user is already logged in
             val currentUser = auth.currentUser

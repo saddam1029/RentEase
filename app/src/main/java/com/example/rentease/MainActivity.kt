@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         binding.ivProfile.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.putExtra("fromProfile", 0)
             startActivity(intent)
         }
 

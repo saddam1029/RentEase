@@ -1,5 +1,6 @@
 package com.example.rentease
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,14 @@ class RealtorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRealtorBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.ivProfile.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.putExtra("fromProfile", 1)
+            startActivity(intent)
+        }
+
 
     }
 }

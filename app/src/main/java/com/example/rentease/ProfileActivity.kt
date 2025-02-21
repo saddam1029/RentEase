@@ -3,24 +3,28 @@ package com.example.rentease
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.rentease.databinding.ActivityProfileBinding
-import com.example.rentease.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize FirebaseAuth
+        auth = FirebaseAuth.getInstance()
+
+        // Check if value 1 is received
+        val fromProfile = intent.getIntExtra("fromProfile", 0)
+        if (fromProfile == 1) {
+            binding.imageView3.setImageResource(R.drawable.post) // Change image
+            binding.tvYourPost.text = "Your Posts" // Change text
+        }
 
 
         // Set up logout button
