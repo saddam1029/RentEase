@@ -53,7 +53,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
           <ImageView
-              android:id="@+id/ivBackProfile"
+              android:id="@+id/ivBack"
               android:layout_width="@dimen/_20sdp"
               android:layout_height="@dimen/_20sdp"
               android:layout_marginStart="@dimen/_14sdp"
