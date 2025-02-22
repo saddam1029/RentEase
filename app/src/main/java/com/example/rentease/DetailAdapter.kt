@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
@@ -27,11 +26,7 @@ class DetailAdapter(
         Glide.with(holder.itemView.context)
             .load(images[position])
             .into(holder.imageView)
-
-
     }
-
-
 
     override fun getItemCount(): Int = images.size
 }

@@ -86,12 +86,7 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
-    private fun saveUserData(
-        userId: String,
-        firstName: String,
-        lastName: String,
-        email: String,
-        selectedRole: String
+    private fun saveUserData(userId: String, firstName: String, lastName: String, email: String, selectedRole: String
     ) {
         val userMap = hashMapOf(
             "name" to "$firstName $lastName",

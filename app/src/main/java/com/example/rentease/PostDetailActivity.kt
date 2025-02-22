@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +21,7 @@ class PostDetailActivity : AppCompatActivity() {
     private lateinit var imageAdapter: DetailAdapter
     private val imageList = mutableListOf<Uri>()
     private var postId: String? = null
-    private var realtorId: String? = null // Optional: To optimize fetching
+    private var realtorId: String? = null
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +32,8 @@ class PostDetailActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
 
-        // Get the data passed via intent
         postId = intent.getStringExtra("postId")
-        realtorId = intent.getStringExtra("realtorId") // Optional: Add this if you can pass it
+        realtorId = intent.getStringExtra("realtorId")
         val description = intent.getStringExtra("description")
         val location = intent.getStringExtra("location")
         val price = intent.getStringExtra("price")
@@ -43,7 +41,6 @@ class PostDetailActivity : AppCompatActivity() {
         val propertyType = intent.getStringExtra("propertyType")
         val rooms = intent.getStringExtra("rooms")
 
-        // Set the values to the TextViews
         binding.tvDescription.text = description
         binding.tvLocation.text = location
         binding.tvPrice.text = price
@@ -51,17 +48,10 @@ class PostDetailActivity : AppCompatActivity() {
         binding.tvArea.text = propertyArea
         binding.tvRoom.text = "$rooms Rooms"
 
-        // Initialize RecyclerView for images
-        imageAdapter = DetailAdapter(imageList) { position ->
-            // No removal action needed for PostDetailActivity (view-only mode)
-            Log.d("PostDetailActivity", "Image at position $position clicked, no action taken")
-        }
-        binding.rvPics.apply {
-            layoutManager = LinearLayoutManager(this@PostDetailActivity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = imageAdapter
-        }
+        imageAdapter = DetailAdapter(imageList) { position -> }
+        binding.rvPics.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvPics.adapter = imageAdapter
 
-        // Fetch images from Firebase
         fetchImagesFromFirebase()
 
         binding.ivBack.setOnClickListener {
@@ -72,7 +62,6 @@ class PostDetailActivity : AppCompatActivity() {
     private fun fetchImagesFromFirebase() {
         postId?.let { id ->
             if (realtorId != null) {
-                // Optimized fetch if realtorId is provided
                 database.reference.child("Realtor").child(realtorId!!).child("Post").child(id)
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
@@ -82,20 +71,15 @@ class PostDetailActivity : AppCompatActivity() {
                                 imageUrls?.let {
                                     imageList.addAll(it.map { url -> Uri.parse(url) })
                                     imageAdapter.notifyDataSetChanged()
-                                    Log.d("PostDetailActivity", "Loaded ${imageList.size} images for postId: $id")
-                                } ?: Log.d("PostDetailActivity", "No imageUrls found for postId: $id")
-                            } else {
-                                Log.d("PostDetailActivity", "Post not found for postId: $id under realtorId: $realtorId")
+                                }
                             }
                         }
 
                         override fun onCancelled(error: DatabaseError) {
-                            Log.e("PostDetailActivity", "Failed to fetch images: ${error.message}")
                             Toast.makeText(this@PostDetailActivity, "Failed to load images", Toast.LENGTH_SHORT).show()
                         }
                     })
             } else {
-                // Fallback: Search all Realtors (less efficient)
                 database.reference.child("Realtor").addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         imageList.clear()
@@ -106,19 +90,16 @@ class PostDetailActivity : AppCompatActivity() {
                                 imageUrls?.let {
                                     imageList.addAll(it.map { url -> Uri.parse(url) })
                                     imageAdapter.notifyDataSetChanged()
-                                    Log.d("PostDetailActivity", "Loaded ${imageList.size} images for postId: $id")
                                 }
-                                break // Found the post, stop searching
+                                break
                             }
                         }
                         if (imageList.isEmpty()) {
-                            Log.d("PostDetailActivity", "No images found for postId: $id")
                             Toast.makeText(this@PostDetailActivity, "No images available", Toast.LENGTH_SHORT).show()
                         }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        Log.e("PostDetailActivity", "Failed to fetch images: ${error.message}")
                         Toast.makeText(this@PostDetailActivity, "Failed to load images", Toast.LENGTH_SHORT).show()
                     }
                 })

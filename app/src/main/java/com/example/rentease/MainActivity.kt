@@ -2,7 +2,6 @@ package com.example.rentease
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -32,17 +31,14 @@ class MainActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        // Set up RecyclerView
         binding.rvProviderHome.layoutManager = LinearLayoutManager(this)
         postAdapter = UserAdapter(filteredPostList)
         binding.rvProviderHome.adapter = postAdapter
 
-        // Set up the search EditText
         binding.etSearch.addTextChangedListener { text ->
             filterPosts(text.toString())
         }
 
-        // Set up the price and size filter click listeners
         binding.cvPrice.setOnClickListener {
             showPriceFilterDialog()
         }
@@ -51,7 +47,6 @@ class MainActivity : AppCompatActivity() {
             showSizeFilterDialog()
         }
 
-        // Profile click listener (remove duplicate)
         binding.ivProfile.setOnClickListener {
             val userId = auth.currentUser?.uid
             if (userId != null) {
@@ -61,14 +56,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Fetch all posts from Firebase
         fetchPostsFromFirebase()
     }
 
     private fun fetchUserData(userId: String) {
         val userRef = database.child("Regular User").child(userId).child("userInfo")
-
-        Log.d("FetchUserData", "Fetching data for userId: $userId")
 
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -76,21 +68,16 @@ class MainActivity : AppCompatActivity() {
                     val name = snapshot.child("name").getValue(String::class.java) ?: "N/A"
                     val type = snapshot.child("type").getValue(String::class.java) ?: "N/A"
 
-                    Log.d("FetchUserData", "User Name: $name")
-                    Log.d("FetchUserData", "User Type: $type")
-
                     val intent = Intent(this@MainActivity, ProfileActivity::class.java)
                     intent.putExtra("name", name)
                     intent.putExtra("type", type)
                     startActivity(intent)
                 } else {
-                    Log.e("FetchUserData", "User data not found for userId: $userId")
                     Toast.makeText(this@MainActivity, "User data not found", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("FetchUserData", "Failed to retrieve user data: ${error.message}")
                 Toast.makeText(this@MainActivity, "Failed to retrieve user data", Toast.LENGTH_SHORT).show()
             }
         })
@@ -131,12 +118,10 @@ class MainActivity : AppCompatActivity() {
 
         filteredPostList.addAll(filteredBySearch)
 
-        // Apply price filter if selected
         if (!selectedPriceLevel.isNullOrEmpty()) {
             filterPostsByPrice(selectedPriceLevel!!)
         }
 
-        // Apply size filter if selected
         if (!selectedSizeLevel.isNullOrEmpty()) {
             filterPostsBySize(selectedSizeLevel!!)
         }

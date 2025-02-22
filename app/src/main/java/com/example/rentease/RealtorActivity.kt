@@ -81,19 +81,28 @@ class RealtorActivity : AppCompatActivity() {
 
                         binding.ivProfile.setOnClickListener {
                             val intent = Intent(this@RealtorActivity, ProfileActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             intent.putExtra("fromProfile", 1)
                             intent.putExtra("name", name)
                             intent.putExtra("type", type)
                             startActivity(intent)
                         }
                     } else {
-                        Toast.makeText(this@RealtorActivity, "User info not found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@RealtorActivity,
+                            "User info not found",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(this@RealtorActivity, "Failed to fetch user info: ${error.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@RealtorActivity,
+                        "Failed to fetch user info: ${error.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
     }
@@ -119,7 +128,11 @@ class RealtorActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(this@RealtorActivity, "Failed to load posts: ${error.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@RealtorActivity,
+                        "Failed to load posts: ${error.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
     }

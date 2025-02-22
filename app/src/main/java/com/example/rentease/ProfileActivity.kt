@@ -85,7 +85,6 @@ class ProfileActivity : AppCompatActivity() {
             dialog.dismiss()
         }
 
-        // Show the dialog
         builder.create().show()
     }
 

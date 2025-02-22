@@ -6,6 +6,6 @@ import com.cloudinary.android.MediaManager
 class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        MediaManager.init(this) // Initialize Cloudinary using manifest meta-data
+        MediaManager.init(this)
     }
 }
