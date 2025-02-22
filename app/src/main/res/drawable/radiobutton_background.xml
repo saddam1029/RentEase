@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Checked State -->
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/lite" /> <!-- Your app color -->
+            <corners android:radius="@dimen/_12sdp" /> <!-- Round corners -->
+        </shape>
+    </item>
+
+    <!-- Default State -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white" /> <!-- Default background color -->
+            <corners android:radius="@dimen/_12sdp" /> <!-- Round corners -->
+            <stroke
+                android:width="@dimen/_2sdp"
+                android:color="@color/lite" /> <!-- Border color -->
+        </shape>
+    </item>
+</selector>
