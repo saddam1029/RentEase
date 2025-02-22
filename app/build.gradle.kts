@@ -41,29 +41,25 @@ android {
 }
 
 dependencies {
-    // Core Android dependencies
-    implementation(libs.androidx.core.ktx.v1120)  // Ensure this is defined in libs.versions.toml
+    implementation(libs.androidx.core.ktx.v1120)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.activity.ktx)   // For ActivityResult API
+    implementation(libs.androidx.activity.ktx)
 
     // Firebase dependencies
-    implementation(libs.firebase.auth.v2231)     // Firebase Authentication
-    implementation(libs.firebase.database)       // Firebase Realtime Database
-    implementation(libs.firebase.storage)        // Firebase Storage
-
-    // All:
+    implementation(libs.firebase.auth.v2231)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
     implementation (libs.cloudinary.android.v302)
 
-// Download + Preprocess:
     implementation (libs.cloudinary.android.download)
     implementation (libs.cloudinary.cloudinary.android.preprocess)
 
     // Cloudinary and image handling
-    implementation(libs.cloudinary.android)      // Reference to Cloudinary in version catalog
-    implementation(libs.glide)                   // For image loading
+    implementation(libs.cloudinary.android)
+    implementation(libs.glide)
 
     // Networking (optional, for additional API calls)
     implementation(libs.retrofit)
@@ -78,7 +74,6 @@ dependencies {
     implementation(libs.play.services.cast.tv)
     implementation(libs.androidx.runner)
 
-    // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

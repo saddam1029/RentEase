@@ -31,19 +31,16 @@ class UserAdapter(private val postList: List<Post>) : RecyclerView.Adapter<UserA
             binding.tvRoom.text = "${post.rooms} Rooms"
             binding.tvType.text = post.propertyType
 
-            // Load the first image from imageUrls into ivPics
             post.imageUrls?.firstOrNull()?.let { firstImageUrl ->
                 Glide.with(itemView.context)
                     .load(firstImageUrl)
-                    .placeholder(R.drawable.blank) // Optional: Add a placeholder image
-                    .error(R.drawable.blank) // Optional: Add an error image
+                    .placeholder(R.drawable.blank)
+                    .error(R.drawable.blank)
                     .into(binding.ivPics)
             } ?: run {
-                // If no images, clear the ImageView or set a default image
-                binding.ivPics.setImageResource(R.drawable.blank) // Optional
+                binding.ivPics.setImageResource(R.drawable.blank)
             }
 
-            // Set an OnClickListener for the entire item view
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, PostDetailActivity::class.java)
                 intent.putExtra("description", post.description)

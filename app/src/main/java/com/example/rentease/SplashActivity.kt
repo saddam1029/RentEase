@@ -28,7 +28,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Enable Firebase offline persistence
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
 
         if (FirebaseApp.getApps(this).isEmpty()) {
@@ -40,15 +39,12 @@ class SplashActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             delay(1000)
-
-            // Check if a user is already logged in
             val currentUser = auth.currentUser
 
             if (currentUser != null) {
                 if (isNetworkAvailable()) {
                     checkUserType(currentUser.uid)
                 } else {
-                    // No internet connection, proceed with cached data
                     navigateBasedOnCachedData(currentUser.uid)
                 }
             } else {
@@ -88,7 +84,6 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateBasedOnCachedData(userId: String) {
-        // Check locally cached data for user type
         database.child("Realtor").child(userId).child("userInfo").child("type")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
