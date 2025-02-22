@@ -44,8 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/app_color"
+        android:layout_marginStart="@dimen/_20sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
@@ -63,11 +63,11 @@
 
         <EditText
             android:id="@+id/etSearch"
-            android:layout_width="@dimen/_240sdp"
+            android:layout_width="@dimen/_160sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:ems="10"
-            android:hint="Search"
+            android:hint="House Type"
             android:paddingStart="@dimen/_30sdp"
             android:textSize="@dimen/_11ssp"
             tools:ignore="RtlSymmetry" />
@@ -76,17 +76,103 @@
 
     </androidx.cardview.widget.CardView>
 
-    <ImageView
-        android:id="@+id/ivFilter"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_7sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:textAlignment="center"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvSize"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:backgroundTint="@color/lite"
+        android:clickable="true"
+        android:elevation="@dimen/_5sdp"
         android:focusable="true"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="@dimen/_7sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-        app:srcCompat="@drawable/filter" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/app_color"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTimeDummy"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:padding="@dimen/_5sdp">
+
+
+            <ImageView
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/size" />
+
+            <ImageView
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/down" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvPrice"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:backgroundTint="@color/lite"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:clickable="true"
+        android:elevation="@dimen/_5sdp"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="@dimen/_7sdp"
+        app:layout_constraintEnd_toStartOf="@+id/cvSize"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/app_color"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTimeDummy"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:padding="@dimen/_5sdp">
+
+
+            <ImageView
+                android:id="@+id/tvPrice"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/price" />
+
+            <ImageView
+                android:id="@+id/ivDropdownArea"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/down" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProviderHome"

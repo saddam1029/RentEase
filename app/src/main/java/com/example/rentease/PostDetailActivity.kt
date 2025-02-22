@@ -1,0 +1,142 @@
+package com.example.rentease
+
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rentease.databinding.ActivityPostDetailBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+
+class PostDetailActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityPostDetailBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
+    private lateinit var imageAdapter: DetailAdapter
+    private val imageList = mutableListOf<Uri>()
+    private var postId: String? = null
+    private var realtorId: String? = null // Optional: To optimize fetching
+
+    @SuppressLint("SetTextI18n")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityPostDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+
+        // Get the data passed via intent
+        postId = intent.getStringExtra("postId")
+        realtorId = intent.getStringExtra("realtorId") // Optional: Add this if you can pass it
+        val description = intent.getStringExtra("description")
+        val location = intent.getStringExtra("location")
+        val price = intent.getStringExtra("price")
+        val propertyArea = intent.getStringExtra("propertyArea")
+        val propertyType = intent.getStringExtra("propertyType")
+        val rooms = intent.getStringExtra("rooms")
+
+        // Set the values to the TextViews
+        binding.tvDescription.text = description
+        binding.tvLocation.text = location
+        binding.tvPrice.text = price
+        binding.textView3.text = "Your Dream $propertyType"
+        binding.tvArea.text = propertyArea
+        binding.tvRoom.text = "$rooms Rooms"
+
+        // Initialize RecyclerView for images
+        imageAdapter = DetailAdapter(imageList) { position ->
+            // No removal action needed for PostDetailActivity (view-only mode)
+            Log.d("PostDetailActivity", "Image at position $position clicked, no action taken")
+        }
+        binding.rvPics.apply {
+            layoutManager = LinearLayoutManager(this@PostDetailActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = imageAdapter
+        }
+
+        // Fetch images from Firebase
+        fetchImagesFromFirebase()
+
+        binding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    private fun fetchImagesFromFirebase() {
+        postId?.let { id ->
+            if (realtorId != null) {
+                // Optimized fetch if realtorId is provided
+                database.reference.child("Realtor").child(realtorId!!).child("Post").child(id)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.exists()) {
+                                imageList.clear()
+                                val imageUrls = snapshot.child("imageUrls").value as? List<String>
+                                imageUrls?.let {
+                                    imageList.addAll(it.map { url -> Uri.parse(url) })
+                                    imageAdapter.notifyDataSetChanged()
+                                    Log.d("PostDetailActivity", "Loaded ${imageList.size} images for postId: $id")
+                                } ?: Log.d("PostDetailActivity", "No imageUrls found for postId: $id")
+                            } else {
+                                Log.d("PostDetailActivity", "Post not found for postId: $id under realtorId: $realtorId")
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Log.e("PostDetailActivity", "Failed to fetch images: ${error.message}")
+                            Toast.makeText(this@PostDetailActivity, "Failed to load images", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+            } else {
+                // Fallback: Search all Realtors (less efficient)
+                database.reference.child("Realtor").addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        imageList.clear()
+                        for (realtorSnapshot in snapshot.children) {
+                            val postSnapshot = realtorSnapshot.child("Post").child(id)
+                            if (postSnapshot.exists()) {
+                                val imageUrls = postSnapshot.child("imageUrls").value as? List<String>
+                                imageUrls?.let {
+                                    imageList.addAll(it.map { url -> Uri.parse(url) })
+                                    imageAdapter.notifyDataSetChanged()
+                                    Log.d("PostDetailActivity", "Loaded ${imageList.size} images for postId: $id")
+                                }
+                                break // Found the post, stop searching
+                            }
+                        }
+                        if (imageList.isEmpty()) {
+                            Log.d("PostDetailActivity", "No images found for postId: $id")
+                            Toast.makeText(this@PostDetailActivity, "No images available", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e("PostDetailActivity", "Failed to fetch images: ${error.message}")
+                        Toast.makeText(this@PostDetailActivity, "Failed to load images", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+        } ?: run {
+            Toast.makeText(this, "Invalid post ID", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        navigateToHome()
+    }
+
+    private fun navigateToHome() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
+    }
+}

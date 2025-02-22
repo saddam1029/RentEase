@@ -28,6 +28,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
 
+        binding.tvForgetPassword.setOnClickListener {
+            startActivity(Intent(this, ForgotActivity::class.java))
+        }
+
         // Handle login button click
         binding.btSighIn.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
